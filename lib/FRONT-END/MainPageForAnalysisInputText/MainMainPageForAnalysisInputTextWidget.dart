@@ -69,7 +69,7 @@ class _MainMainPageForAnalysisInputTextWidget
   @override
   Widget build(BuildContext context) {
     h = MediaQuery.of(context).size.height;
-    maxLines = h ~/50;
+    maxLines = h ~/ 50;
     return Scaffold(
       key: scaffoldKey,
       appBar: MainAppBarWidget(context),
@@ -87,39 +87,42 @@ class _MainMainPageForAnalysisInputTextWidget
     return Expanded(
         child: Column(
       children: [
-        Align(
-          alignment: Alignment.centerLeft,
-          child: Padding(
-            padding: EdgeInsets.only(top: 10, left: 55),
-            child: Container(
-              child: mistakenSentenceList != null
-                  ? Text("Mistaken Sentences",
-                      style: TextStyle(
-                        fontWeight: FontWeight.w500,
-                        height: 1.5,
-                        fontSize: 27,
-                        fontFamily: 'Eczar',
-                        color: Color.fromRGBO(134, 73, 33, 1),
-                      ))
-                  : SizedBox.shrink(),
-            ),
+        Padding(
+          padding: EdgeInsets.only(top: 10, left: 55,right: 55),
+          child: Container(
+            child: mistakenSentenceList != null
+                ? Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Expanded(
+                      child: Text("Mistaken Sentences",
+                          style: TextStyle(
+                            fontWeight: FontWeight.w500,
+                            height: 1.5,
+                            fontSize: 18,
+                            fontFamily: 'Eczar',
+                            color: Color.fromRGBO(134, 73, 33, 1),
+                          )),
+                    ),
+                    Text("${mistakenSentenceList?.length} Mistakes found",
+                        style: TextStyle(
+                          fontWeight: FontWeight.w500,
+                          height: 1.5,
+                          fontSize: 18,
+                          fontFamily: 'Eczar',
+                          color: Color.fromRGBO(134, 73, 33, 1),
+                        )),
+                  ],
+                )
+                : SizedBox.shrink(),
           ),
         ),
         MistakenSentenceList(),
         mistakenSentenceList != null
-            ? Padding(
-                padding: const EdgeInsets.only(top: 20.0),
-                child: Container(
-                    height: 145,
-                    color: Color(0xAAF2EEE1),
-                    child: Row(
-                      children: [
-                        MistakeDescriptionField(),
-                        Spacer(),
-                        ExportButton(),
-                      ],
-                    )),
-              )
+            ? Container(
+              color: Color(0xAAF2EEE1),
+              child: MistakeDescriptionField(),
+            )
             : SizedBox.shrink()
       ],
     ));
@@ -128,43 +131,46 @@ class _MainMainPageForAnalysisInputTextWidget
   Widget MistakeDescriptionField() {
     return currentMistakeDescription != ""
         ? Padding(
-            padding: const EdgeInsets.only(top: 10, bottom: 5, left: 55),
-            child: Container(
-              width: 600,
-              child: Column(
-                children: [
-                  Align(
-                    alignment: Alignment.topLeft,
-                    child: Text("Mistake description",
-                        style: TextStyle(
-                          fontWeight: FontWeight.w500,
-                          height: 1.5,
-                          fontSize: 27,
-                          fontFamily: 'Eczar',
-                          color: Color.fromRGBO(134, 73, 33, 1),
-                        )),
-                  ),
-                  Container(
-                      height: 70,
-                      width: 600,
-                      decoration: const BoxDecoration(
-                        color: Color(0xFFFFFFFF),
-                        borderRadius: BorderRadius.all(Radius.circular(12)),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(10.0),
-                        child: SingleChildScrollView(
-                          controller: ScrollController(),
-                          scrollDirection: Axis.vertical,
-                          child: Text(
-                            "${currentMistakeDescription}",
-                            style: TextStyle(
-                                fontSize: 14, fontFamily: 'Eczar', height: 1.3),
-                          ),
+            padding: const EdgeInsets.symmetric(vertical: 16,horizontal: 24),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Expanded(
+                      child: Text("Mistake description",
+                          style: TextStyle(
+                            fontWeight: FontWeight.w500,
+                            fontSize: 24,
+                            fontFamily: 'Eczar',
+                            color: Color.fromRGBO(134, 73, 33, 1),
+                          )),
+                    ),
+                    Align(alignment: Alignment.center,child: ExportButton()),
+                  ],
+                ),
+                Container(
+                    height: 70,
+                    width: 900,
+                    decoration: const BoxDecoration(
+                      color: Color(0xFFFFFFFF),
+                      borderRadius: BorderRadius.all(Radius.circular(12)),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: SingleChildScrollView(
+                        controller: ScrollController(),
+                        scrollDirection: Axis.vertical,
+                        child: Text(
+                          "${currentMistakeDescription}",
+                          style: TextStyle(
+                              fontSize: 18, fontFamily: 'Eczar', height: 1.3),
                         ),
-                      )),
-                ],
-              ),
+                      ),
+                    )),
+              ],
             ),
           )
         : SizedBox.shrink();
@@ -193,18 +199,10 @@ class _MainMainPageForAnalysisInputTextWidget
     return Container(
         decoration: const BoxDecoration(
           color: const Color(0xFFF2EEE1),
-          // boxShadow: [
-          //   BoxShadow(
-          //     color: Colors.black26,
-          //     blurRadius: 3,
-          //     offset: Offset(1, 3),
-          //     spreadRadius: 1,
-          //   ),
-          // ],
           borderRadius: BorderRadius.all(Radius.circular(23)),
         ),
-        margin: const EdgeInsets.only(top: 15, right: 55, left: 55),
-        padding: const EdgeInsets.only(top: 25, right: 35, left: 35, bottom: 3),
+        margin: const EdgeInsets.only(top: 10, right: 55, left: 55),
+        padding: const EdgeInsets.only(top: 16, right: 35, left: 35, bottom: 3),
         child: Column(
           children: [
             Align(
@@ -257,9 +255,8 @@ class _MainMainPageForAnalysisInputTextWidget
                               child: Icon(
                                 Icons.warning_rounded,
                                 color: Color(0xFFAA6D43),
-                                size: 32,
+                                size: 24,
                               )),
-
                         ),
                         Padding(
                           padding: const EdgeInsets.only(left: 3.0),
@@ -290,9 +287,9 @@ class _MainMainPageForAnalysisInputTextWidget
                                   width: 30,
                                   height: 30,
                                 ))),
-                         Padding(
-                           padding: const EdgeInsets.only(left: 3.0),
-                           child: Text("Copy",
+                        Padding(
+                          padding: const EdgeInsets.only(left: 3.0),
+                          child: Text("Copy",
                               style: TextStyle(
                                 fontWeight: FontWeight.w500,
                                 height: 1.5,
@@ -300,7 +297,7 @@ class _MainMainPageForAnalysisInputTextWidget
                                 fontFamily: 'Eczar',
                                 color: Color.fromRGBO(134, 73, 33, 1),
                               )),
-                         ),
+                        ),
                       ],
                     ),
                   )
@@ -320,6 +317,7 @@ class _MainMainPageForAnalysisInputTextWidget
   }
 
   List<TooltipSpan> convertTextToTextSpans(List<SentencePart> txt) {
+   const  double fontSize =18;
     List<TooltipSpan> toRet = [];
     for (var i in txt) {
       i.description == null
@@ -329,12 +327,12 @@ class _MainMainPageForAnalysisInputTextWidget
                   text: i.text,
                   style: const TextStyle(
                     height: 1.5,
-                    fontSize: 20,
+                    fontSize: fontSize,
                     fontFamily: 'Eczar',
                   ))))
           : toRet.add(TooltipSpan(
               message:
-                  "On tap, you can see the mistake description at the bottom of the screen",
+                  "${i.description}",
               inlineSpan: TextSpan(
                   recognizer: new TapGestureRecognizer()
                     ..onTap = () {
@@ -346,7 +344,7 @@ class _MainMainPageForAnalysisInputTextWidget
                   style: const TextStyle(
                     backgroundColor: Color(0x80DD4A4A),
                     height: 1.5,
-                    fontSize: 20,
+                    fontSize: fontSize,
                     fontFamily: 'Eczar',
                   ))));
     }
@@ -357,7 +355,7 @@ class _MainMainPageForAnalysisInputTextWidget
     return Align(
       alignment: Alignment.centerRight,
       child: Padding(
-        padding: const EdgeInsets.only(top: 30.0, bottom: 0, right: 53),
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
         child: FittedBox(
           child: ElevatedButton(
               onPressed: () {
@@ -380,7 +378,7 @@ class _MainMainPageForAnalysisInputTextWidget
                       style: TextStyle(
                         color: Color.fromRGBO(251, 253, 247, 1),
                         fontFamily: 'Eczar',
-                        fontSize: 30,
+                        fontSize: 18,
                       )),
                 ],
               )),
@@ -393,11 +391,8 @@ class _MainMainPageForAnalysisInputTextWidget
     return Container(
         width: 470,
         color: const Color(0xFFE9F1E8),
-        child: Column( children: [
-          TextInputField(),
-          Spacer(),
-          AnalyzeTextButton()
-        ]));
+        child: Column(
+            children: [TextInputField(), Spacer(), AnalyzeTextButton()]));
   }
 
   Widget TextInputField() {
@@ -416,33 +411,34 @@ class _MainMainPageForAnalysisInputTextWidget
           ),
           margin: const EdgeInsets.only(top: 65, left: 20, right: 20),
           child: TextField(
-              key: Key("textField"),
-              controller: controllerOfTextForAnalysis,
-              minLines: maxLines,
-              maxLines: maxLines,
-              cursorColor: Color.fromRGBO(134, 73, 33, 1),
-              cursorWidth: 2,
-              cursorRadius: Radius.circular(3),
-              decoration: InputDecoration(
-                contentPadding:
-                    EdgeInsets.only(top: 20, right: 27, left: 27, bottom: 20),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(23)),
-                  borderSide: BorderSide(
-                    width: 0,
-                    style: BorderStyle.none,
-                  ),
+            key: Key("textField"),
+            controller: controllerOfTextForAnalysis,
+            minLines: maxLines,
+            maxLines: maxLines,
+            cursorColor: Color.fromRGBO(134, 73, 33, 1),
+            cursorWidth: 2,
+            cursorRadius: Radius.circular(3),
+            decoration: InputDecoration(
+              contentPadding:
+                  EdgeInsets.only(top: 20, right: 27, left: 27, bottom: 20),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.all(Radius.circular(23)),
+                borderSide: BorderSide(
+                  width: 0,
+                  style: BorderStyle.none,
                 ),
-                hintText: "Input text for analysis",
-                fillColor: Color(0xFFF2EEE1),
-                filled: true,
               ),
-              style: TextStyle(
-                  height: 1.5,
-                  fontFamily: 'Eczar',
-                  fontSize: 20,
-                  color: Colors.black,),
-              )),
+              hintText: "Input text for analysis",
+              fillColor: Color(0xFFF2EEE1),
+              filled: true,
+            ),
+            style: TextStyle(
+              height: 1.5,
+              fontFamily: 'Eczar',
+              fontSize: 18,
+              color: Colors.black,
+            ),
+          )),
     );
   }
 
@@ -480,7 +476,7 @@ class _MainMainPageForAnalysisInputTextWidget
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(40)),
                 padding:
-                    const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                    const EdgeInsets.symmetric(horizontal: 100, vertical: 10),
               ),
               child: Row(
                 children: <Widget>[
@@ -488,14 +484,14 @@ class _MainMainPageForAnalysisInputTextWidget
                       style: TextStyle(
                         color: Color.fromRGBO(251, 253, 247, 1),
                         fontFamily: 'Eczar',
-                        fontSize: 30,
+                        fontSize: 18,
                       )),
                   Padding(
                     padding: const EdgeInsets.fromLTRB(5, 0, 0, 0),
                     child: Image.asset(
                       'Zoomall.png',
-                      height: 35,
-                      width: 35,
+                      height: 24,
+                      width: 24,
                     ),
                   )
                 ],

@@ -35,7 +35,7 @@ class IntroWidget extends StatefulWidget {
 }
 
 class _IntroWidgetState extends State<IntroWidget> {
-  final controllerOfTextForAnalysis = TextEditingController();
+  final controllerOfTextForAnalysis = TextEditingController(text: "there are too many thing to do");
   late int maxLines;
 
   @override
@@ -84,7 +84,6 @@ class _IntroWidgetState extends State<IntroWidget> {
               widthFactor: 60 / 100,
               child: Column(
                 children: [
-
                   //Spacer(),
                   Container(height: h*0.177,),
                   Center(
@@ -101,7 +100,7 @@ class _IntroWidgetState extends State<IntroWidget> {
                               height: 45,
                               child: Container(
                                 child: Text(
-                                  "or",
+                                  "OR",
                                   style: TextStyle(
                                     color: Color.fromRGBO(95, 95, 105, 1),
                                     fontFamily: 'Eczar',
@@ -129,7 +128,7 @@ class _IntroWidgetState extends State<IntroWidget> {
     return Align(
       alignment: Alignment.topRight,
       child: Padding(
-        padding: const EdgeInsets.only(top: 10),
+        padding: const EdgeInsets.only(top: 16),
         child: Container(
           decoration: const BoxDecoration(
             boxShadow: [
@@ -151,8 +150,8 @@ class _IntroWidgetState extends State<IntroWidget> {
                     List<PDFfile>? files = [];
                     files.add(PDFfile('textForAnalysis', textFromTextField));
 
-                    Map<String, List<List<SentencePart>>>? mistakes =
-                        await Analyzer.getMistakes(files);
+                    // Map<String, List<List<SentencePart>>>? mistakes = await Analyzer.getMistakes(files);
+                    Map<String, List<List<SentencePart>>>? mistakes = null;
                     if (mistakes == null) {
                       List<dynamic> files = [];
                       final jsondata = await rootBundle.rootBundle
@@ -175,7 +174,7 @@ class _IntroWidgetState extends State<IntroWidget> {
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(40)),
                   padding:
-                      const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                      const EdgeInsets.symmetric(horizontal: 32, vertical: 10),
                 ),
                 child: Row(
                   children: <Widget>[
@@ -183,7 +182,7 @@ class _IntroWidgetState extends State<IntroWidget> {
                         style: TextStyle(
                           color: Color.fromRGBO(251, 253, 247, 1),
                           fontFamily: 'Eczar',
-                          fontSize: 30,
+                          fontSize: 18,
                         )),
                     Padding(
                       padding: const EdgeInsets.fromLTRB(5, 0, 0, 0),
@@ -302,20 +301,21 @@ class _IntroWidgetState extends State<IntroWidget> {
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(40)),
                 padding:
-                    const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                    const EdgeInsets.symmetric(horizontal: 100, vertical: 16),
               ),
               child: Row(
                 children: <Widget>[
-                  const Text("Upload files",
+                   Text("Upload files".toUpperCase(),
                       style: TextStyle(
                         color: Color.fromRGBO(251, 253, 247, 1),
                         fontFamily: 'Eczar',
-                        fontSize: 30,
+                        fontSize: 24,
                       )),
+                  SizedBox(width: 16,),
                   Image.asset(
                     'Importpdficon.png',
-                    height: 35,
-                    width: 35,
+                    height: 32,
+                    width: 32,
                   )
                 ],
               )),
