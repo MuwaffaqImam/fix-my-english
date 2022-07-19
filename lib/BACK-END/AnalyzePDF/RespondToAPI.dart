@@ -16,7 +16,8 @@ Future<FileOfMistakes?> respondToAPI(PDFfile inputFile) async {
   print(inputFile.text);
 
   final response =
-      await http.post(Uri.parse('https://iextract-new-api.herokuapp.com/FixMyEnglish'),
+      // await http.post(Uri.parse('https://iextract-new-api.herokuapp.com/FixMyEnglish'),
+      await http.post(Uri.parse('http://127.0.0.1:8000 /FixMyEnglish'),
           headers: {
             "accept": "application/json",
             "Content-Type": "application/json",

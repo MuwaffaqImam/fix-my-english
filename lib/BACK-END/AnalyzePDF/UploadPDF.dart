@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:typed_data';
 import 'package:file_picker/file_picker.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:syncfusion_flutter_pdf/pdf.dart';
 import '../PDFfileClass.dart';
 import '../DefaultFileClass.dart';
@@ -9,7 +10,6 @@ class PdfAPI{
   static Future<List<DefaultFile>?> selectFiles() async {
     // selectFiles() - forces the user to upload
     // files from his/her files system
-
     FilePickerResult? tmp;
     try {
       tmp = await FilePicker.platform.pickFiles(
@@ -24,6 +24,7 @@ class PdfAPI{
     if (tmp == null){
       return null;
     }
+    // EasyLoading.show();
     List<DefaultFile> result = [];
     for (var item in tmp.files){
       result.add(DefaultFile(item.bytes, item.name));

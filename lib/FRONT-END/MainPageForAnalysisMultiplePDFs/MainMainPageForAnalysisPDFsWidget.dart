@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:web1_app/BACK-END/AnalyzePDF/SentencePartClass.dart';
@@ -91,85 +92,94 @@ class _MainMainPageForAnalysisPDFsWidget
                 "report part ${Analyzer.reportData.keys.elementAt(indexOfSelectedPDF)}"),
         child: Column(
           children: [
-            Align(
-              alignment: Alignment.centerLeft,
-              child: Padding(
-                padding: EdgeInsets.only(top: 10, left: 55),
-                child: Container(
-                  child: mistakenSentenceList != null ? Text("Mistaken Sentences",
-                      style: TextStyle(
-                        fontWeight: FontWeight.w500,
-                        height: 1.5,
-                        fontSize: 27,
-                        fontFamily: 'Eczar',
-                        color: Color.fromRGBO(134, 73, 33, 1),
-                      )) : SizedBox.shrink(),
-                ),
+            Padding(
+              padding: EdgeInsets.only(top: 10, left: 55),
+              child: Container(
+                child: mistakenSentenceList != null ?
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Expanded(
+                      child: Text("Mistaken Sentences",
+                          style: TextStyle(
+                            fontWeight: FontWeight.w500,
+                            height: 1.5,
+                            fontSize: 18,
+                            fontFamily: 'Eczar',
+                            color: Color.fromRGBO(134, 73, 33, 1),
+                          )),
+                    ),
+                    Text("Mistaken found ${mistakenSentenceList?.length} ",
+                        style: TextStyle(
+                          fontWeight: FontWeight.w500,
+                          height: 1.5,
+                          fontSize: 18,
+                          fontFamily: 'Eczar',
+                          color: Color.fromRGBO(134, 73, 33, 1),
+                        )),
+                    SizedBox(width: 55,)
+                  ],
+                ) : SizedBox.shrink(),
               ),
             ),
             MistakenSentenceList(),
-            mistakenSentenceList != null ? Padding(
-              padding: const EdgeInsets.only(top: 20.0),
-              child: Container(
-                height: 145,
-                  color: Color(0xAAF2EEE1),
-                  child: Row(
-                    children: [
-                      MistakeDescriptionField(),
-                      Spacer(),
-                      ExportButton(),
-                    ],
-                  )),
-            ) : SizedBox.shrink()
+            mistakenSentenceList != null ? MistakeDescriptionField() : SizedBox.shrink()
           ],
         ));
   }
 
   Widget MistakeDescriptionField() {
     return currentMistakeDescription != ""
-        ? Padding(
-            padding: const EdgeInsets.only(top: 10, bottom: 5, left: 55),
-            child: Container(
-              width: 600,
-              child: Column(
-                children: [
-                  Align(
-                    alignment: Alignment.topLeft,
-                    child: Text("Mistake description",
-                        style: TextStyle(
-                          fontWeight: FontWeight.w500,
-                          height: 1.5,
-                          fontSize: 27,
-                          fontFamily: 'Eczar',
-                          color: Color.fromRGBO(134, 73, 33, 1),
-                        )),
-                  ),
-                  Container(
-                      height: 70,
-                      width: 600,
-                      decoration: const BoxDecoration(
-                        color: Color(0xFFFFFFFF),
-                        borderRadius: BorderRadius.all(Radius.circular(12)),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(10.0),
-                        child: SingleChildScrollView(
-                          controller: ScrollController(),
-                          scrollDirection: Axis.vertical,
-                          child: Text(
-                            "${currentMistakeDescription}",
-                            style: TextStyle(
-                              fontSize: 14,
-                              fontFamily: 'Eczar',
-                              height: 1.3
-                            ),
+        ? Card(
+      color: Color(0xFFF2EEE1),
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Expanded(
+                      child: Text("Mistake description",
+                          style: TextStyle(
+                            fontWeight: FontWeight.w500,
+                            height: 1.5,
+                            fontSize: 18,
+                            fontFamily: 'Eczar',
+                            color: Color.fromRGBO(134, 73, 33, 1),
+                          )),
+                    ),
+                    ExportButton()
+                  ],
+                ),
+                Container(
+                    height: 70,
+                    width: 900,
+                    decoration: const BoxDecoration(
+                      color: Color(0xFFFFFFFF),
+                      borderRadius: BorderRadius.all(Radius.circular(12)),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16,vertical: 10),
+                      child: SingleChildScrollView(
+                        controller: ScrollController(),
+                        scrollDirection: Axis.vertical,
+                        child: Text(
+                          "${currentMistakeDescription}",
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontFamily: 'Eczar',
+                            height: 1.3
                           ),
                         ),
-                      )),
-                ],
-              ),
+                      ),
+                    )),
+              ],
             ),
-          )
+          ),
+        )
         : SizedBox.shrink();
   }
 
@@ -324,19 +334,20 @@ class _MainMainPageForAnalysisPDFsWidget
 
   List<TooltipSpan> convertTextToTextSpans(List<SentencePart> txt) {
     List<TooltipSpan> toRet = [];
+    double font= 18;
     for (var i in txt) {
       i.description == null
           ? toRet.add(TooltipSpan(
               message: "",
               inlineSpan: TextSpan(
                   text: i.text,
-                  style: const TextStyle(
+                  style:  TextStyle(
                     height: 1.5,
-                    fontSize: 20,
+                    fontSize: font,
                     fontFamily: 'Eczar',
                   ))))
           : toRet.add(TooltipSpan(
-              message: "On tap, you can see the mistake description at the bottom of the screen",
+              message: "${i.description}",
               inlineSpan: TextSpan(
                   recognizer: new TapGestureRecognizer()
                     ..onTap = () {
@@ -345,10 +356,10 @@ class _MainMainPageForAnalysisPDFsWidget
                       });
                     },
                   text: i.text,
-                  style: const TextStyle(
+                  style:  TextStyle(
                     backgroundColor: Color(0x80DD4A4A),
                     height: 1.5,
-                    fontSize: 20,
+                    fontSize: font,
                     fontFamily: 'Eczar',
                   ))));
     }
@@ -359,7 +370,7 @@ class _MainMainPageForAnalysisPDFsWidget
     return Align(
       alignment: Alignment.centerRight,
       child: Padding(
-        padding: const EdgeInsets.only(top: 30.0, bottom: 0, right: 53),
+        padding: const EdgeInsets.only( bottom: 16),
         child: Container(
           decoration: const BoxDecoration(
             boxShadow: [
@@ -395,7 +406,7 @@ class _MainMainPageForAnalysisPDFsWidget
                         style: TextStyle(
                           color: Color.fromRGBO(251, 253, 247, 1),
                           fontFamily: 'Eczar',
-                          fontSize: 30,
+                          fontSize: 18,
                         )),
                   ],
                 )),
@@ -405,16 +416,22 @@ class _MainMainPageForAnalysisPDFsWidget
     );
   }
 
+  bool showProgress = false;
   Widget PartWithPDFsWidget() {
     return Container(
       width: 386,
       color: const Color(0xFFE9F1E8),
-      child: Column(children: [
-        UploadPDFButton(),
-        clearAllButton(),
-        PDFNamesList(),
-        ExportAllButton()
-      ]),
+      child: Stack(
+        children: [
+          Column(children: [
+            UploadPDFButton(),
+            clearAllButton(),
+            PDFNamesList(),
+            ExportAllButton()
+          ]),
+          showProgress? Center(child: CircularProgressIndicator()) : SizedBox()
+        ],
+      ),
     );
   }
 
@@ -439,7 +456,7 @@ class _MainMainPageForAnalysisPDFsWidget
                     style: TextStyle(
                       color: Color(0xFF62806F),
                       fontFamily: 'Eczar',
-                      fontSize: 25,
+                      fontSize: 14,
                     )),
               ),
             ),
@@ -470,7 +487,7 @@ class _MainMainPageForAnalysisPDFsWidget
                   style: TextStyle(
                       fontFamily: 'Eczar',
                       color: Colors.black,
-                      fontSize: 26,
+                      fontSize: 24,
                       fontWeight: FontWeight.w500),
                 ),
               ),
@@ -492,7 +509,7 @@ class _MainMainPageForAnalysisPDFsWidget
                           height: 1.4,
                           fontFamily: 'Eczar',
                           color: Colors.black,
-                          fontSize: 18.0,
+                          fontSize: 14.0,
                           fontWeight: FontWeight.w100),
                     ),
                   ),
@@ -578,7 +595,7 @@ class _MainMainPageForAnalysisPDFsWidget
                   style: TextStyle(
                     color: Color.fromRGBO(251, 253, 247, 1),
                     fontFamily: 'Eczar',
-                    fontSize: 30,
+                    fontSize: 18,
                   )),
             ),
           ),
@@ -656,7 +673,7 @@ class _MainMainPageForAnalysisPDFsWidget
                                     style: const TextStyle(
                                       color: Color.fromRGBO(251, 253, 247, 1),
                                       fontFamily: 'Eczar',
-                                      fontSize: 24,
+                                      fontSize: 14,
                                     )),
                               ),
                             ),
@@ -726,10 +743,16 @@ class _MainMainPageForAnalysisPDFsWidget
                 onPressed: () async {
                   List<PDFfile>? files =
                       PdfAPI.getFilesTexts(await PdfAPI.selectFiles());
-                  EasyLoading.show(status: "loading...");
+                  // EasyLoading.show(indicator: CircularProgressIndicator(),maskType: EasyLoadingMaskType.none );
+                  setState(() {
+                    showProgress = true;
+                  });
                   if (files == null) {
                     print("Problem: no files chosen!");
                     EasyLoading.dismiss();
+                    setState(() {
+                      showProgress = false;
+                    });
                   }
                   Map<String, List<List<SentencePart>>>? mistakes =
                       await Analyzer.getMistakes(files!);
@@ -746,6 +769,9 @@ class _MainMainPageForAnalysisPDFsWidget
                     Analyzer.reportData.addAll(mistakes!);
                   });
                   EasyLoading.dismiss();
+                  setState(() {
+                    showProgress = false;
+                  });
                 },
                 style: ElevatedButton.styleFrom(
                   primary: const Color(0xFF4D6658),
@@ -759,11 +785,11 @@ class _MainMainPageForAnalysisPDFsWidget
                   children: const <Widget>[
                     Expanded(
                         child: Center(
-                      child: Text("    Upload",
+                      child: Text("Upload More",
                           style: TextStyle(
                             color: Color.fromRGBO(251, 253, 247, 1),
                             fontFamily: 'Eczar',
-                            fontSize: 30,
+                            fontSize: 18,
                             fontWeight: FontWeight.w100,
                           )),
                     )),

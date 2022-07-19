@@ -150,8 +150,8 @@ class _IntroWidgetState extends State<IntroWidget> {
                     List<PDFfile>? files = [];
                     files.add(PDFfile('textForAnalysis', textFromTextField));
 
-                    // Map<String, List<List<SentencePart>>>? mistakes = await Analyzer.getMistakes(files);
-                    Map<String, List<List<SentencePart>>>? mistakes = null;
+                    Map<String, List<List<SentencePart>>>? mistakes = await Analyzer.getMistakes(files);
+                    // Map<String, List<List<SentencePart>>>? mistakes = null;
                     if (mistakes == null) {
                       List<dynamic> files = [];
                       final jsondata = await rootBundle.rootBundle
@@ -260,16 +260,16 @@ class _IntroWidgetState extends State<IntroWidget> {
         child: FittedBox(
           child: ElevatedButton(
               onPressed: () async {
-                List<PDFfile>? files =
-                    PdfAPI.getFilesTexts(await PdfAPI.selectFiles());
-                EasyLoading.show(status: 'loading...');
-                if (files == null) {
-                  print("Problem: no files chosen!");
-                  EasyLoading.dismiss();
-                }
-                Map<String, List<List<SentencePart>>>? mistakes =
-                    await Analyzer.getMistakes(files!);
-
+                // List<PDFfile>? files =
+                //     PdfAPI.getFilesTexts(await PdfAPI.selectFiles());
+                // EasyLoading.show(status: 'loading...');
+                // if (files == null) {
+                //   print("Problem: no files chosen!");
+                //   EasyLoading.dismiss();
+                // }
+                // Map<String, List<List<SentencePart>>>? mistakes =
+                //     await Analyzer.getMistakes(files!);
+                var mistakes = null;
                 if (mistakes == null) {
                   List<dynamic> files = [];
                   final jsondata = await rootBundle.rootBundle
